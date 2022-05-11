@@ -1,0 +1,168 @@
+﻿@model IEnumerable<SalesAPP.Models.Record>
+
+@{
+    ViewData["Title"] = "GetRecords";
+}
+<script type="text/javascript">
+    function EnableDisableTextBox() {
+        var selectedValue = document.getElementById("ddlOperator").value;
+        var txtValue1 = document.getElementById("txtValue1");
+        var txtValue2 = document.getElementById("txtValue2");
+        if (selectedValue == 0) {
+            txtValue1.disabled = true;
+            txtValue2.disabled = true;
+        }
+        else if (selectedValue == 1 || selectedValue == 2 || selectedValue == 4) {
+            txtValue1.disabled = false;
+            txtValue2.disabled = true;
+        }
+        else if (selectedValue == 3) {
+            txtValue1.disabled = false;
+            txtValue2.disabled = false;
+        }
+    }
+</script>
+<div onmousemove="EnableDisableTextBox()">
+    <h2>View Records</h2>
+    <h5 style="text-align:center;color:green">@ViewData["SuccessMsg"]</h5>
+    <h5 style="text-align:center;color:green">Showing 500 Records at a time</h5>
+    @using (Html.BeginForm())
+    {
+        <table cellspacing="5">
+            @Html.AntiForgeryToken()
+            <tr>
+                <td style="padding:15px 40px">
+                    <b>Page Number</b>
+                </td>
+                <td>
+                    @Html.TextBox("PageNumber", ViewData["pageNo"], new { @class = "form-control", @id = "PageNumber", @type = "number", style = "width:90px"}) off @ViewData["TotalPages"]
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:15px 40px">
+                    <b>Total Revenue</b>
+                </td>
+                <td>
+                    @Html.DropDownList("ddlOperator", new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "No Operator", Value = "0"},
+                        new SelectListItem { Text = "Greater Than", Value = "1"},
+                        new SelectListItem { Text = "Less Than", Value = "2"},
+                        new SelectListItem { Text = "Between", Value = "3"},
+                        new SelectListItem { Text = "Not Equal To", Value = "4"}
+                    }, new { @id = "ddlOperator" }))
+                </td>
+                <td>
+                    @Html.TextBox("Value1", ViewData["Value1"], new { @class = "form-control", @type = "number", style = "width:90px", id = "txtValue1", step = "any", placeholder = "Value 1" })
+                </td>
+                <td>
+                    @Html.TextBox("Value2", ViewData["Value2"], new { @class = "form-control", @type = "number", style = "width:90px", id = "txtValue2", step = "any", placeholder = "Value 2" })
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" align="right">
+                    <input type="submit" value="Go" style="margin:15px 140px 60px 30px" />
+                </td>
+            </tr>
+        </table>
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Region)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Country)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SalesChannel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderPriority)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitsSold)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalRevenue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalProfit)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Region)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SalesChannel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderPriority)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitsSold)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalRevenue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalProfit)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
